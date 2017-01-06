@@ -34,21 +34,29 @@ public class EchoProcessorConfiguration {
 
 	@StreamListener(Processor.INPUT)
 	@SendTo(Processor.OUTPUT)
-	public EnhancedName handle(Message<?> message) {
+	public Message<?> handle(Message<?> message) {
 		System.out.println("Received: " + message);
-		if (message.getPayload() instanceof Map) {
-			Object name = ((Map) message.getPayload()).get("name");
-			System.out.println("name:" + name);
-			if (name instanceof String) {
-				String[] parts = ((String) name).split(" ");
-				if (parts.length > 1) {
-					return new EnhancedName(parts[0], parts[1]);
-				}
-				else {
-					return new EnhancedName("", parts[0]);
-				}
-			}
-		}
-		throw new IllegalArgumentException("Unexpected payload:" + message.getPayload().getClass());
+		return message;
 	}
+
+
+//	@StreamListener(Processor.INPUT)
+//	@SendTo(Processor.OUTPUT)
+//	public EnhancedName handle(Message<?> message) {
+//		System.out.println("Received: " + message);
+//		if (message.getPayload() instanceof Map) {
+//			Object name = ((Map) message.getPayload()).get("name");
+//			System.out.println("name:" + name);
+//			if (name instanceof String) {
+//				String[] parts = ((String) name).split(" ");
+//				if (parts.length > 1) {
+//					return new EnhancedName(parts[0], parts[1]);
+//				}
+//				else {
+//					return new EnhancedName("", parts[0]);
+//				}
+//			}
+//		}
+//		throw new IllegalArgumentException("Unexpected payload:" + message.getPayload().getClass());
+//	}
 }
